@@ -1,33 +1,293 @@
-vHTML
 <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>My GitHub Site</title>
+  <title>Game Vault</title>
   <style>
-    body {
-      font-family: Arial, sans-serif;
-      background-color: #1a1a1a;
-      color: #ffffff;
-      text-align: center;
-      padding: 50px;
+    :root {
+      --bg: #0f172a;
+      --card-bg: #1e293b;
+      --accent: #6366f1;
+      --accent-hover: #4f46e5;
+      --text: #f8fafc;
+      --subtext: #94a3b8;
     }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+
+    body {
+      background-color: var(--bg);
+      color: var(--text);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    header {
+      background-color: var(--card-bg);
+      padding: 1.5rem 2rem;
+      border-bottom: 1px solid #334155;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 1rem;
+    }
+
+    .logo {
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: var(--accent);
+      letter-spacing: 0.5px;
+    }
+
+    .search-bar {
+      padding: 0.6rem 1.2rem;
+      border-radius: 8px;
+      border: 1px solid #334155;
+      background: var(--bg);
+      color: var(--text);
+      width: 280px;
+      outline: none;
+    }
+
+    .search-bar:focus {
+      border-color: var(--accent);
+    }
+
+    main {
+      padding: 2rem;
+      max-width: 1200px;
+      margin: 0 auto;
+      width: 100%;
+      flex: 1;
+    }
+
+    .section-title {
+      font-size: 1.25rem;
+      margin-bottom: 1.5rem;
+      color: var(--subtext);
+      font-weight: 500;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+      gap: 1.5rem;
+    }
+
+    .card {
+      background-color: var(--card-bg);
+      border-radius: 12px;
+      overflow: hidden;
+      border: 1px solid #334155;
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+    }
+
+    .card-thumb {
+      height: 140px;
+      background-color: #334155;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 2.5rem;
+    }
+
+    .card-body {
+      padding: 1.2rem;
+      display: flex;
+      flex-direction: column;
+      flex: 1;
+      justify-content: space-between;
+    }
+
+    .card-title {
+      font-size: 1.1rem;
+      font-weight: 600;
+      margin-bottom: 0.4rem;
+    }
+
+    .card-desc {
+      font-size: 0.85rem;
+      color: var(--subtext);
+      margin-bottom: 1.2rem;
+      line-height: 1.4;
+    }
+
+    .btn-group {
+      display: flex;
+      gap: 0.5rem;
+    }
+
     .btn {
-      background-color: #007bff;
-      color: white;
-      padding: 12px 24px;
+      flex: 1;
+      padding: 0.6rem 0.8rem;
       border: none;
-      border-radius: 5px;
-      font-size: 16px;
+      border-radius: 6px;
+      font-weight: 600;
+      font-size: 0.85rem;
       cursor: pointer;
+      transition: background 0.2s;
+      text-align: center;
+    }
+
+    .btn-primary {
+      background-color: var(--accent);
+      color: white;
+    }
+
+    .btn-primary:hover {
+      background-color: var(--accent-hover);
+    }
+
+    .btn-secondary {
+      background-color: #334155;
+      color: var(--text);
+    }
+
+    .btn-secondary:hover {
+      background-color: #475569;
+    }
+
+    footer {
+      text-align: center;
+      padding: 1.5rem;
+      background-color: var(--card-bg);
+      border-top: 1px solid #334155;
+      color: var(--subtext);
+      font-size: 0.85rem;
+      margin-top: 2rem;
     }
   </style>
 </head>
 <body>
 
-  <h1>Welcome to My Site!</h1>
-  <p>This site is hosted for free using GitHub Pages.</p>
+  <header>
+    <div class="logo">🎮 Game Vault</div>
+    <input type="text" id="search" class="search-bar" placeholder="Search games..." onkeyup="filterGames()">
+  </header>
 
+  <main>
+    <div class="section-title">Available Games</div>
+    <div class="grid" id="gameGrid">
+
+      <!-- Game 1 -->
+      <div class="card" data-title="retro bowl">
+        <div class="card-thumb">🏈</div>
+        <div class="card-body">
+          <div>
+            <div class="card-title">Retro Bowl</div>
+            <div class="card-desc">Classic 8-bit style American football simulation game.</div>
+          </div>
+          <div class="btn-group">
+            <button class="btn btn-primary" onclick="launchInBlank('https://game316009.konggames.com/gamez/0031/6009/live/index.html')">Blank Tab</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Game 2 -->
+      <div class="card" data-title="2048">
+        <div class="card-thumb">🔢</div>
+        <div class="card-body">
+          <div>
+            <div class="card-title">2048</div>
+            <div class="card-desc">Slide numbered tiles to combine them and reach 2048.</div>
+          </div>
+          <div class="btn-group">
+            <button class="btn btn-primary" onclick="launchInBlank('https://play2048.co/')">Blank Tab</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Game 3 -->
+      <div class="card" data-title="pacman pac-man">
+        <div class="card-thumb">🟡</div>
+        <div class="card-body">
+          <div>
+            <div class="card-title">Pac-Man</div>
+            <div class="card-desc">Retro arcade classic. Eat pellets and avoid ghosts.</div>
+          </div>
+          <div class="btn-group">
+            <button class="btn btn-primary" onclick="launchInBlank('https://freepacman.org/')">Blank Tab</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Game 4 -->
+      <div class="card" data-title="snake">
+        <div class="card-thumb">🐍</div>
+        <div class="card-body">
+          <div>
+            <div class="card-title">Snake</div>
+            <div class="card-desc">Classic arcade snake game. Eat apples to grow longer.</div>
+          </div>
+          <div class="btn-group">
+            <button class="btn btn-primary" onclick="launchInBlank('https://playsnake.org/')">Blank Tab</button>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </main>
+
+  <footer>
+    <p>Hosted on GitHub Pages • Games opened via dynamic cloaking</p>
+  </footer>
+
+  <script>
+    // about:blank cloaker launcher
+    function launchInBlank(url) {
+      var win = window.open('about:blank', '_blank');
+      if (win) {
+        win.opener = null;
+        win.document.write(`
+          <!DOCTYPE html>
+          <html>
+          <head>
+            <title>Classes</title>
+            <style>
+              body, html { margin: 0; padding: 0; height: 100%; overflow: hidden; background: #000; }
+              iframe { width: 100%; height: 100%; border: none; }
+            </style>
+          </head>
+          <body>
+            <iframe src="${url}"></iframe>
+          </body>
+          </html>
+        `);
+      } else {
+        alert('Pop-up blocked. Please allow pop-ups for this site to launch games.');
+      }
+    }
+
+    // Search functionality
+    function filterGames() {
+      var input = document.getElementById('search').value.toLowerCase();
+      var cards = document.getElementsByClassName('card');
+
+      for (var i = 0; i < cards.length; i++) {
+        var title = cards[i].getAttribute('data-title');
+        if (title.includes(input)) {
+          cards[i].style.display = 'flex';
+        } else {
+          cards[i].style.display = 'none';
+        }
+      }
+    }
+  </script>
 </body>
 </html>
+
